@@ -1,7 +1,9 @@
 from tkinter import *
 import tkinter.font as tkFont
 from PIL import Image, ImageTk
+import pygame
 from character import *
+import data
 
 class home(object):
     '''創建首頁'''
@@ -25,23 +27,31 @@ class home(object):
         y = int((screenHeight - h ) / 4)
         self.root.geometry("%dx%d+%d+%d" % (w,h,x,y))
 
-        '''建立工具列'''
-        self.menubar = Menu(self.root)
-        # 第6步，建立一個File選單項（預設不下拉，下拉內容包括New，Open，Save，Exit功能項）
-        filemenu = Menu(self.menubar, tearoff=0)
-        # 將上面定義的空選單命名為File，放在選單欄中，就是裝入那個容器中
-        self.menubar.add_cascade(label='工具', menu=filemenu)
+        '''背景音樂'''
+        pygame.mixer.init()
+        pygame.mixer.music.load("./music/starter_BGM.mp3")
+        pygame.mixer.music.play()
 
-        # 在File中加入New、Open、Save等小選單，即我們平時看到的下拉選單，每一個小選單對應命令操作。
-        # filemenu.add_separator()    # 新增一條分隔線
-        filemenu.add_command(label='爬蟲', command=lambda:self.root.destroy())
-        filemenu.add_command(label='離開', command=lambda:self.root.destroy()) # 用tkinter裡面自帶的quit()函式
+        # '''建立工具列'''
+        # self.menubar = Menu(self.root)
+        # self.filemenu = Menu(self.menubar, tearoff=0)
+        # self.menubar.add_cascade(label='爬蟲', menu=self.filemenu)
+        # self.filemenu.add_command(label='台版', command=data.tw)
+        # self.filemenu.add_command(label='日版', command=data.jp)
 
-        self.root.config(menu=self.menubar)
+        # self.Language = Menu(self.menubar, tearoff=0)
+        # self.menubar.add_cascade(label='本版', menu=self.Language)
+        # self.Language.add_command(label='台版', command=lambda:self.Language_cheak('TW'))
+        # self.Language.add_command(label='日版', command=lambda:self.Language_cheak('JP'))
 
+        # self.root.config(menu=self.menubar)
+        self.Language = 'JP'
         self.createPage()
         self.root.mainloop()
     
+    def Language_cheak(self,Lang):
+        self.Language = Lang
+
     def createPage(self):
         '''首頁內容'''
         self.page = Frame(self.root)
@@ -59,14 +69,14 @@ class home(object):
     def goto_frontPage(self):
         '''跳轉至前衛角色資料'''
         self.page.destroy()
-        character(self.root,'front')
+        character(self.root,'front',self.Language)
 
     def goto_middlePage(self):
         '''跳轉至中衛角色資料'''
         self.page.destroy()
-        character(self.root,'middle')
+        character(self.root,'middle',self.Language)
 
     def goto_lastPage(self):
         '''跳轉至後衛角色資料'''
         self.page.destroy()
-        character(self.root,'last')
+        character(self.root,'last',self.Language)
