@@ -6,42 +6,19 @@ import data
 
 class character(object):
     '''前衛、中衛、後衛選單介面'''
-    def __init__(self,master=None,pos=None,Language='JP'):
+    def __init__(self,master=None,pos=None,Language=None):
+        '''設定視窗'''
         self.root = master
-        self.pos = pos
-        self.Language = Language
-        # 鎖定頁面
         self.root.resizable(False,False)
-        # icon設定
-        self.root.iconbitmap('mainpage/app_icon.ico')
-        # 螢幕寬度
+        self.root.iconbitmap("mainpage/app_icon.ico")
         screenWidth = self.root.winfo_screenwidth()
-        # 螢幕高度
         screenHeight = self.root.winfo_screenheight()
-        # 視窗寬
         w = 1200
-        # 視窗高
         h = 680
-        # 視窗左上角x軸位置
         x = int((screenWidth - w) / 2)
-        # 視窗左上角Y軸位置
         y = int((screenHeight - h ) / 4)
-        self.root.geometry('%dx%d+%d+%d' % (w,h,x,y))
-
-        # '''建立工具列'''
-        # self.menubar = Menu(self.root)
-        # self.filemenu = Menu(self.menubar, tearoff=0)
-        # self.menubar.add_cascade(label='爬蟲', menu=self.filemenu)
-        # self.filemenu.add_command(label='台版', command=data.tw)
-        # self.filemenu.add_command(label='日版', command=data.jp)
-
-        # self.Language = Menu(self.menubar, tearoff=0)
-        # self.menubar.add_cascade(label='本版', menu=self.Language)
-        # self.Language.add_command(label='台版', command=lambda:self.Language_cheak('TW'))
-        # self.Language.add_command(label='日版', command=lambda:self.Language_cheak('JP'))
-
-        # self.root.config(menu=self.menubar)
-
+        self.root.geometry("%dx%d+%d+%d" % (w,h,x,y))
+        
         self.character_dict()
         self.createPage()
         self.root.mainloop()
